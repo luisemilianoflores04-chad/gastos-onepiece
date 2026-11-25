@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tesoro Pirata - Control de Gastos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- AUTENTICACION -->
+  <section id="auth" class="centrado">
+    <div class="card auth-card">
+      <h1>Tesoro Pirata</h1>
+      <p class="sub">Control de gastos de la tripulacion</p>
+      <form id="form-auth" novalidate>
+        <label for="auth-email">Correo</label>
+        <input type="email" id="auth-email" placeholder="luffy@grandline.com" required>
+        <label for="auth-pass">Contrasena</label>
+        <input type="password" id="auth-pass" placeholder="Minimo 6 caracteres" required>
+        <p id="auth-msg" class="msg" role="alert"></p>
+        <div class="fila">
+          <button type="submit" class="btn btn-rojo" id="btn-login">Iniciar sesion</button>
+          <button type="button" class="btn btn-amarillo" id="btn-registro">Crear cuenta</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- APP -->
+  <main id="app" class="oculto">
+    <header class="topbar">
+      <h1>Tesoro Pirata</h1>
+      <div class="user">
+        <span id="user-email"></span>
+        <button class="btn btn-chico btn-amarillo" id="btn-logout">Cerrar sesion</button>
+      </div>
+    </header>
+
+    <section class="resumen">
+      <div class="card stat stat-ingreso"><span>Ingresos</span><strong id="tot-ingresos">$0.00</strong></div>
+      <div class="card stat stat-gasto"><span>Gastos</span><strong id="tot-gastos">$0.00</strong></div>
+      <div class="card stat stat-saldo"><span>Saldo</span><strong id="tot-saldo">$0.00</strong></div>
+    </section>
+
+    <section class="layout">
+      <aside>
+        <div class="card">
+          <h2 id="titulo-form">Registrar movimiento</h2>
+          <form id="form-mov" novalidate>
+            <label for="concepto">Concepto</label>
+            <input type="text" id="concepto" placeholder="Ej. Comida" maxlength="80">
+            <label for="monto">Monto</label>
+            <input type="number" id="monto" placeholder="0.00" step="0.01" min="0">
+            <label for="tipo">Tipo</label>
+            <select id="tipo">
+              <option value="gasto">Gasto</option>
+              <option value="ingreso">Ingreso</option>
+            </select>
+            <label for="categoria">Categoria</label>
+            <select id="categoria"></select>
+            <label for="fecha">Fecha</label>
+            <input type="date" id="fecha">
+            <p id="mov-msg" class="msg" role="alert"></p>
+            <div class="fila">
+              <button type="submit" class="btn btn-rojo" id="btn-guardar">Agregar</button>
+              <button type="button" class="btn btn-gris oculto" id="btn-cancelar">Cancelar</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="card">
+          <h2>Categorias</h2>
+          <form id="form-cat" class="fila" novalidate>
+            <input type="text" id="cat-nombre" placeholder="Nueva categoria" maxlength="40">
+            <button type="submit" class="btn btn-amarillo btn-chico">Agregar</button>
+          </form>
+          <p id="cat-msg" class="msg" role="alert"></p>
+          <ul id="lista-cat" class="chips"></ul>
+        </div>
+      </aside>
+
+      <section class="card">
+        <h2>Movimientos</h2>
+        <div class="filtros">
+          <input type="search" id="buscar" placeholder="Buscar concepto...">
+          <select id="f-tipo">
+            <option value="">Todos los tipos</option>
+            <option value="ingreso">Ingresos</option>
+            <option value="gasto">Gastos</option>
+          </select>
+          <select id="f-cat"></select>
+        </div>
+        <div class="tabla-wrap">
+          <table>
+            <thead>
+              <tr><th>Fecha</th><th>Concepto</th><th>Categoria</th><th>Monto</th><th>Tipo</th><th>Acciones</th></tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+        <p id="vacio" class="vacio oculto">No hay movimientos para mostrar.</p>
+      </section>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+</body>
+</html>
